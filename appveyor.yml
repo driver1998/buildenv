@@ -2,26 +2,33 @@ image: Ubuntu1804
 
 environment:
   matrix:
-    - ARCH: x86_64
-    - ARCH: i686
     - ARCH: aarch64
+    - ARCH: x86_64
     - ARCH: armv7
-    
-  
+    - ARCH: i686
+
 install:
   - sh: |-
-      curl -o llvm-mingw.tar.xz    -L https://github.com/mstorsjo/llvm-mingw/releases/download/20200325/llvm-mingw-20200325-ubuntu-16.04.tar.xz
+      curl -o llvm-mingw.tar.xz    -L https://github.com/mstorsjo/llvm-mingw/releases/download/20200325/llvm-mingw-20200325-ubuntu-18.04.tar.xz
       tar xJf llvm-mingw.tar.xz    || exit 1
-      curl -o sdl.tar.gz           -L https://www.libsdl.org/release/SDL2-2.0.12.tar.gz
+      curl -o sdl.tar.gz           -L https://www.libsdl.org/release/SDL2-2.0.10.tar.gz
       tar xzf sdl.tar.gz           || exit 1
       curl -o zlib.tar.xz          -L https://www.zlib.net/zlib-1.2.11.tar.xz
       tar xJf zlib.tar.xz          || exit 1
       curl -o libpng.tar.xz        -L https://download.sourceforge.net/libpng/libpng-1.6.37.tar.xz
       tar xJf libpng.tar.xz        || exit 1
-      curl -o openal-soft.tar.bz2  -L https://kcat.strangesoft.net/openal-releases/openal-soft-1.19.1.tar.bz2
+      curl -o openal-soft.tar.bz2  -L https://kcat.strangesoft.net/openal-releases/openal-soft-1.20.1.tar.bz2
       tar xjf openal-soft.tar.bz2  || exit 1
       curl -o freetype.tar.xz      -L https://download.savannah.gnu.org/releases/freetype/freetype-2.10.2.tar.xz
       tar xJf freetype.tar.xz      || exit 1
+      curl  -o gmp.tar.xz          -L https://gmplib.org/download/gmp/gmp-6.2.0.tar.xz
+      tar -xJf gmp.tar.xz          || exit 1
+      curl  -o gnutls.tar.xz       -L https://www.gnupg.org/ftp/gcrypt/gnutls/v3.6/gnutls-3.6.13.tar.xz
+      tar -xJf gnutls.tar.xz       || exit 1
+      curl  -o nettle.tar.gz       -L https://ftp.gnu.org/gnu/nettle/nettle-3.6.tar.gz
+      tar -xzf nettle.tar.gz       || exit 1
+      curl  -o sqlite.tar.gz       -L https://sqlite.org/2020/sqlite-autoconf-3320300.tar.gz
+      tar -xzf sqlite.tar.gz       || exit 1
       chmod +x build.sh
       
 build_script:
@@ -29,10 +36,10 @@ build_script:
 
 after_build:
   sh: |-
-    mv buildenv.zip buildenv-$ARCH.zip
+    mv buildenv.tar.xz buildenv-$ARCH.tar.xz
 
 artifacts:
-  - path: 'buildenv*.zip'
+  - path: 'buildenv*.tar.xz'
     name: buildenv
 
 # deploy:

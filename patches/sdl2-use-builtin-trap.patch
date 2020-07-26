@@ -1,0 +1,13 @@
+diff --git a/include/SDL_assert.h b/include/SDL_assert.h
+index 21bdad9..5f0d568 100644
+--- a/include/SDL_assert.h
++++ b/include/SDL_assert.h
+@@ -55,6 +55,8 @@ assert can have unique static variables associated with it.
+     #define SDL_TriggerBreakpoint() __asm__ __volatile__ ( "int $3\n\t" )
+ #elif defined(__386__) && defined(__WATCOMC__)
+     #define SDL_TriggerBreakpoint() { _asm { int 0x03 } }
++#elif defined(__has_builtin) && __has_builtin(__builtin_trap)
++    #define SDL_TriggerBreakpoint() __builtin_trap()
+ #elif defined(HAVE_SIGNAL_H) && !defined(__WATCOMC__)
+     #include <signal.h>
+     #define SDL_TriggerBreakpoint() raise(SIGTRAP)
