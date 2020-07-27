@@ -42,11 +42,11 @@ artifacts:
   - path: 'buildenv*.tar.xz'
     name: buildenv
 
-# deploy:
-#  - release: $(APPVEYOR_BUILD_NUMBER)
-#    description: 86Box $(APPVEYOR_BUILD_NUMBER)
-#    provider: GitHub
-#    artifact: /86Box.*\.zip/
-#    auth_token:
-#      secure: H8HAtJ5SrLHk1gW1eYZFcjtekn1rIW7a8GJsNC6Nftcql8wE0seZRtYqMnFoQLnr
-#    draft: true
+deploy:
+  - release: v0.$(APPVEYOR_BUILD_NUMBER)
+    description: Build $(APPVEYOR_BUILD_NUMBER)
+    provider: GitHub
+    artifact: /buildenv.*\.tar\.xz/
+    auth_token:
+      secure: H8HAtJ5SrLHk1gW1eYZFcjtekn1rIW7a8GJsNC6Nftcql8wE0seZRtYqMnFoQLnr
+    draft: true
